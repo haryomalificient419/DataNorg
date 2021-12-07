@@ -1,5 +1,5 @@
 from view import Start, DataEntry, DataNorg
-import time
+
 
 
 
