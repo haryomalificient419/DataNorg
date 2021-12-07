@@ -6,9 +6,6 @@ from kivy.uix.image import Image
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 
-from typing import Text
-
-
 
 class Start(Screen):
     def __init__(self, **kwargs):
