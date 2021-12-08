@@ -1,8 +1,65 @@
-<Screen>:
+<Start>:
     GridLayout:
         cols: 1
-        size_hint:(0.6, 0.7)
-        pos_hint:{"center_x": 0.5, "center_y":0.5}
+        size_hint:(0.5, 0.5)
+        pos_hint:{"center_x":0.5, "center_y":0.5}
+        
         Image:
             source: "datanorg.png"
+            
+        FloatLayout:
+            Label:
+                text: "Number of Tables:"
+                pos_hint:{"center_x":0.5, "center_y":0.5}
+                
+            TextInput:
+                id: number_of_tables
+                size_hint:(None, None)
+                size: (200, 30)
+                pos_hint:{"center_x":0.5, "center_y":0.35}
+                
+            Button:
+                id: enter
+                background_color: (1, 0, 0.25, 1)
+                size_hint:(None, None)
+                size: (100, 30)
+                pos_hint:{"center_x":0.5, "center_y":0.1}
+                text: "Enter"
+                on_release:
+                    root.switch_screen_to_dataentry()
+        
+<PopupWarningMessage>:
+    title: 'Warning !'
+    auto_dismiss: False
+    background_color: [1, 0.5, 0, 0.5]
+    size_hint:(0.5, 0.5)
+    pos_hint:{"center_x":0.5, "center_y":0.5}
+    FloatLayout:
+        Label:
+            text: "Number must be between 1 to 256 inclusively!"
+            size_hint:(0.5, 0.5)
+            pos_hint:{"center_x":0.5, "center_y":0.5}
+            pos: 170, 100
+        Button:
+            size_hint:(None, None)
+            pos_hint:{"center_x":0.5, "center_y":0.25}
+            text: "Cancel"
+            pos: 300, 125
+            size: 80, 30
+            background_color: (1, 0, 0.25, 1)
+            on_press:
+                root.dismiss()
+                             
+                
+           
+            
+            
+            
+                
+            
+
+
+
+        
+        
         
