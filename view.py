@@ -9,7 +9,7 @@ from typing import Text
 
 
 
-MIN_AMOUNT_OF_TABLES = 1
+MIN_AMOUNT_OF_TABLES = 127
 MAX_AMOUNT_OF_TABLES = 256
 
 class Start(Screen):
