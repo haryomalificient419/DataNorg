@@ -1,4 +1,33 @@
 <Start>:
+    ActionBar:
+        pos_hint: {'top':1}
+        background_color: [0, 0.85, .76, 1]
+        ActionView:
+            use_separator: True
+            ActionPrevious:
+                title: 'Data Norg'
+                with_previous: False
+            ActionGroup:
+                text: 'File'
+                mode: 'spinner'
+                ActionButton:
+                    text: 'Open File'
+                    id: open_file
+            ActionGroup:
+                text: 'Tools' 
+                mode: 'spinner'
+                ActionButton:
+                    text: 'Convert to csv'
+                ActionButton:
+                    text: 'Convert to xml'
+                ActionButton:
+                    text: 'Convert to sql'
+            
+            ActionButton:
+                text: 'Quit'
+                on_press: app.get_running_app().stop()
+                
+
     GridLayout:
         cols: 1
         size_hint:(0.5, 0.5)
@@ -17,6 +46,8 @@
         Image:
             source: "datanorg.png"
         
+        
+    
         
     
         

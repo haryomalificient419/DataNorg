@@ -25,6 +25,7 @@ class DataEntry(Screen):
 class PopupWarningMessage(Popup):
    pass 
 
+
 class DataNorg(App):
     def build(self) -> object:
         self.icon = 'datanorg.png'
