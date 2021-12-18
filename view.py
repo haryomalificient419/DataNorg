@@ -14,6 +14,7 @@ from typing import Text
 class Start(Screen):
     _popup: object
     
+    
     def __init__(self, **kwargs):
         super(Start, self).__init__(**kwargs)
         self._popup = None
