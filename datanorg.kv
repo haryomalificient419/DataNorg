@@ -13,6 +13,8 @@
                 ActionButton:
                     text: 'Open File'
                     id: open_file
+                    on_press:
+                        root.open_file()
             ActionGroup:
                 text: 'Tools' 
                 mode: 'spinner'
@@ -51,7 +53,7 @@
         
     
         
-<PopupWarningMessage>:
+<WarningMessage>:
     title: 'Warning !'
     auto_dismiss: False
     background_color: [1, 0.5, 0, 0.5]
@@ -72,7 +74,38 @@
             background_color: (1, 0, 0.25, 1)
             on_press:
                 root.dismiss()
+
+
+<OpenFile>:
+    title: 'File'
+    auto_dismiss: False
+    background_color: [1, 0.5, 0, 0.5]
+    size_hint:(0.9, 0.9)
+    pos_hint:{"center_x":0.5, "center_y":0.5}
+    BoxLayout:
+        FileChooserListView:
+            id:filechooser
+        Button:
+            size_hint:(None, None)
+            pos_hint:{"center_x":0.5, "center_y":0.25}
+            text: "Open"
+            pos: 300, 125
+            size: 80, 30
+            background_color: (0, 0.85, .76, 1)
+            on_press:
+                root.load(filechooser.path, filechooser.selection)
                              
+        Button:
+            size_hint:(None, None)
+            pos_hint:{"center_x":0.5, "center_y":0.25}
+            text: "Cancel"
+            pos: 300, 125
+            size: 80, 30
+            background_color: (1, 0, 0.25, 1)
+            on_press:
+                root.dismiss()
+
+                
                 
            
             

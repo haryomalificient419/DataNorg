@@ -4,6 +4,9 @@ from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
+from kivy.properties import ObjectProperty
+
+import os
 
 from typing import Text
 
@@ -13,17 +16,40 @@ class Start(Screen):
     
     def __init__(self, **kwargs):
         super(Start, self).__init__(**kwargs)
-        self._popup = PopupWarningMessage()
+        self._popup = None
+
+    def set_popup(self, obj: object) -> None:
+        self._popup = None
+        self._popup = obj
+
+    def dismiss_popup(self) -> None:
+        self._popup.dismiss()
         
     def open_warning_message(self) -> object:
+        self.set_popup(WarningMessage())
         self._popup.open()
+
+    def open_file(self) -> object:
+        self.set_popup(OpenFile(load=self.load))
+        self._popup.open()
+
+    def load(self, path, filename):
+        with open(os.path.join(path, filename[0])) as stream:
+            #self.text_input.text = stream.read()
+            print(stream.read())
+
+        self.dismiss_popup()
+
 
 class DataEntry(Screen):
     def __init__(self, **kwargs):
         super(DataEntry, self).__init__(**kwargs)
 
-class PopupWarningMessage(Popup):
-   pass 
+class WarningMessage(Popup):
+   pass
+
+class OpenFile(Popup):
+    load = ObjectProperty(None)
 
 
 class DataNorg(App):
