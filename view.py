@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 import kivy
 from kivy.app import App
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.widget import Widget
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
 
@@ -26,20 +27,36 @@ class Start(Screen):
     def dismiss_popup(self) -> None:
         self._popup.dismiss()
         
-    def open_warning_message(self) -> object:
+    def open_warning_message(self) -> None:
         self.set_popup(WarningMessage())
         self._popup.open()
 
-    def open_file(self) -> object:
+    def open_file(self) -> None:
         self.set_popup(OpenFile(load=self.load))
         self._popup.open()
+    
+   
 
     def load(self, path, filename):
-        with open(os.path.join(path, filename[0])) as stream:
-            #self.text_input.text = stream.read()
-            print(stream.read())
+        try:
+            with open(os.path.join(path, filename[0])) as stream:
+                certified_files = ('.csv', '.xml', '.json', '.sql')
+                try:
+                    for certified_file in certified_files:
+                        if self.is_valid_filename(filename, certified_file):
+                            content = PresentFile(text_input = stream.read())
+                            self.add_widget(content)
+                except:
+                        pass
+        except:
+            pass
+
 
         self.dismiss_popup()
+    
+    def is_valid_filename(self, file:Text, file_type:Text) -> bool:
+        return file[0].endswith(file_type)
+        
 
 
 class DataEntry(Screen):
@@ -52,11 +69,13 @@ class WarningMessage(Popup):
 class OpenFile(Popup):
     load = ObjectProperty(None)
 
+class PresentFile(FloatLayout):
+    text_input = ObjectProperty(None)
 
 class DataNorg(App):
     def build(self) -> object:
         self.icon = 'datanorg.png'
-        screen_manager = ScreenManager()
+        screen_manager = ScreenManager(transition = FadeTransition ())
         start_screen = Start(name="start")
         data_entry_screen = DataEntry(name="dataentry")
         screen_manager.add_widget(start_screen)

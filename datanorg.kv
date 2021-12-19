@@ -25,6 +25,8 @@
                     text: 'Convert to xml'
                 ActionButton:
                     text: 'Convert to sql'
+                ActionButton:
+                    text: 'Convert to json'
             
             ActionButton:
                 text: 'Quit'
@@ -107,16 +109,49 @@
                 root.dismiss()
 
                 
+<WarningMessage>:
+    title: 'Warning !'
+    auto_dismiss: False
+    background_color: [1, 0.5, 0, 0.5]
+    size_hint:(0.5, 0.5)
+    pos_hint:{"center_x":0.5, "center_y":0.5}
+    FloatLayout:
+        Label:
+            text: "Number must be between 1 to 256 inclusively!"
+            size_hint:(0.5, 0.5)
+            pos_hint:{"center_x":0.5, "center_y":0.5}
+            pos: 170, 100
+        Button:
+            size_hint:(None, None)
+            pos_hint:{"center_x":0.5, "center_y":0.25}
+            text: "Cancel"
+            pos: 300, 125
+            size: 80, 30
+            background_color: (1, 0, 0.25, 1)
+            on_press:
+                root.dismiss()
+
+
+<PresentFile>:
+    FloatLayout:
+        size_hint:(1, 0.85)
+        pos_hint:{"center_x":0.5, "center_y":0.5}
+        Button:
+            size_hint:(None, None)
+            pos_hint:{"center_x":0.5, "center_y":0.95}
+            text: "Cancel"
+            pos: 300, 125
+            size: 80, 30
+            background_color: (1, 0, 0.25, 1)
+            on_press:
+                root.clear_widgets()
+            
+        BoxLayout:
+            id: text_box
+            TextInput:
+                id: file_text
+                text:''+root.text_input
                 
-           
-            
-            
-            
-                
-            
 
-
-
-        
-        
+            
         
