@@ -1,4 +1,4 @@
-
+from dataclasses import dataclass
 import kivy
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
