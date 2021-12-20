@@ -26,6 +26,14 @@ class Csv(Converter):
         self.content = self.content.partition('\n')
         self.keys = self.content[0].split(';')
 
+    def check_int(self, value: str)->int:
+            val=value
+            try:
+                val = int(value)
+            except:
+                pass
+            return val
+
     def convert_to_json(self)->None:
         with open('{}.json'.format(self.file_name), 'w') as writer:
             writer.write("[\n")
@@ -35,19 +43,26 @@ class Csv(Converter):
                 writer.write(" {\n")
                 for sub_layer in range(len(sub_layers)):
                     if sub_layer == len(sub_layers) - 1:
-                        writer.write('   "'+self.keys[sub_layer].strip(" ")+'"'+": "+'"'+sub_layers[sub_layer]+'"'+"\n")
+                        if isinstance(self.check_int(sub_layers[sub_layer]), int):
+                            writer.write('   "'+self.keys[sub_layer].strip(" ")+'"'+": "+sub_layers[sub_layer]+",\n")
+                        else:
+                            writer.write('   "'+self.keys[sub_layer].strip(" ")+'"'+": "+'"'+sub_layers[sub_layer]+'"'+"\n")
                     else:
-                        writer.write('   "'+self.keys[sub_layer].strip(" ")+'"'+": "+'"'+sub_layers[sub_layer]+'"'+","+"\n") 
+                        if isinstance(self.check_int(sub_layers[sub_layer]), int):
+                            writer.write('   "'+self.keys[sub_layer].strip(" ")+'"'+": "+sub_layers[sub_layer]+",\n")
+                        else:
+                            writer.write('   "'+self.keys[sub_layer].strip(" ")+'"'+": "+'"'+sub_layers[sub_layer]+'"'+","+"\n")
+                         
                 if layer == len(layers) - 1:
                     writer.write(" }")
                 else:
                     writer.write(" },\n\n")
             writer.write("\n]")
-            
-            
 
     def convert_to_xml(self):
         pass
+
+    
     def convert_to_sql(self):
         pass
     
