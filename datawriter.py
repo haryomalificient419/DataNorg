@@ -4,6 +4,9 @@ import os
 
 #first lets work on converting csv to json
 
+
+
+
 @dataclass
 class Converter:
     file_name: str
@@ -22,6 +25,7 @@ class Converter:
 @dataclass
 class Csv(Converter):
     keys: str
+
     def set_keys(self)->None:
         self.content = self.content.partition('\n')
         self.keys = self.content[0].split(';')
@@ -85,6 +89,7 @@ class Sql(Converter):
 
 
 #For test purposes only
+"""
 if __name__ == '__main__':
     csv = Csv("klk", ".csv", ".json", None, None)
     csv.content = '''Username; Identifier;One-time password;Recovery code;First name;Last name;Department;Location
@@ -95,3 +100,4 @@ jenkins46;9346;14ju73;mj9346;Mary;Jenkins;Engineering;Manchester
 smith79;5079;09ja61;js5079;Jamie;Smith;Engineering;Manchester'''
 csv.set_keys()
 csv.convert_to_json()
+"""

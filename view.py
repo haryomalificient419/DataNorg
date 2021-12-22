@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+
+
+
 import kivy
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
@@ -14,11 +17,15 @@ from typing import Text
 
 class Start(Screen):
     _popup: object
+    _format_from: str
+    _format_to: str
     
     
     def __init__(self, **kwargs):
         super(Start, self).__init__(**kwargs)
         self._popup = None
+        self._format_from = None
+        self._format_to = None
 
     def set_popup(self, obj: object) -> None:
         self._popup = None
@@ -34,9 +41,14 @@ class Start(Screen):
     def open_file(self) -> None:
         self.set_popup(OpenFile(load=self.load))
         self._popup.open()
-    
-   
 
+    def set_format_from(self, format:str) -> None:
+        self._format_from = format
+
+    def set_format_to(self, format:str) -> None:
+        self._format_to = format
+        
+    
     def load(self, path, filename):
         try:
             with open(os.path.join(path, filename[0])) as stream:
@@ -45,9 +57,10 @@ class Start(Screen):
                     for certified_file in certified_files:
                         if self.is_valid_filename(filename, certified_file):
                             content = PresentFile(text_input = stream.read())
+                            self.set_format_from(certified_file)
                             self.add_widget(content)
                 except:
-                        pass
+                    pass
         except:
             pass
 
@@ -72,15 +85,6 @@ class OpenFile(Popup):
 class PresentFile(FloatLayout):
     text_input = ObjectProperty(None)
 
-class DataNorg(App):
-    def build(self) -> object:
-        self.icon = 'datanorg.png'
-        screen_manager = ScreenManager(transition = FadeTransition ())
-        start_screen = Start(name="start")
-        data_entry_screen = DataEntry(name="dataentry")
-        screen_manager.add_widget(start_screen)
-        screen_manager.add_widget(data_entry_screen)
-        
-        return screen_manager
+
 
 
