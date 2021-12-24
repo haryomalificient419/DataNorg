@@ -28,10 +28,6 @@
                     on_press:
                         root.set_format_to(".xml")
                 ActionButton:
-                    text: 'Convert to sql'
-                    on_press:
-                        root.set_format_to(".sql")
-                ActionButton:
                     text: 'Convert to json'
                     on_press:
                         root.set_format_to(".json")
@@ -50,20 +46,7 @@
             source: "datanorg.png"
             
         
-<DataEntry>:
-    GridLayout:
-        cols: 1
-        size_hint:(0.5, 0.5)
-        pos_hint:{"center_x":0.5, "center_y":0.5}
-        
-        Image:
-            source: "datanorg.png"
-        
-        
-    
-        
-    
-        
+
 <WarningMessage>:
     title: 'Warning !'
     auto_dismiss: False

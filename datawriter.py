@@ -1,6 +1,5 @@
 from typing import Text
 from dataclasses import dataclass
-import os
 
 #first lets work on converting csv to json
 
@@ -66,10 +65,6 @@ class Csv(Converter):
     def convert_to_xml(self):
         pass
 
-    
-    def convert_to_sql(self):
-        pass
-    
 
 class Json(Converter):
     def get_keys(self):
@@ -78,14 +73,10 @@ class Json(Converter):
         pass
     def convert_to_xml(self):
         pass
-    def convert_to_sql(self):
-        pass
-
+    
 class Xml(Converter):
     pass
 
-class Sql(Converter):
-    pass
 
 
 #For test purposes only
