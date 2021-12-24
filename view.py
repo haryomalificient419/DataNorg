@@ -59,6 +59,8 @@ class Start(Screen):
 
     def set_format_to(self, format:str) -> None:
         self._format_to = format
+
+        #Fix code later
         if self._format_from == ".csv":
             csv = Csv(self._file_name, self._format_from, self._format_to, None, None)
             csv.content = self._content
@@ -68,6 +70,16 @@ class Start(Screen):
             if self._format_to == ".xml":
                 csv.set_keys()
                 csv.convert_to_xml()
+
+        if self._format_from == ".json":
+            json = Json(self._file_name, self._format_from, self._format_to, None, None)
+            json.content = self._content
+            if self._format_to == ".csv":
+                json.set_keys()
+                json.convert_to_csv()
+            if self._format_to == ".xml":
+                json.set_keys()
+                json.convert_to_xml()
         
         
     

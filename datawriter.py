@@ -12,6 +12,7 @@ class Converter:
     format: str
     convert_to: str
     content: Text
+    keys: str
 
     #for example
     #file name: "username-password-recovery-code"
@@ -19,16 +20,12 @@ class Converter:
     #convert_to: ".json"
     #content: "Username; Identifier;"
 
-
-    
-@dataclass
-class Csv(Converter):
-    keys: str
-
     def set_keys(self)->None:
         self.content = self.content.partition('\n')
         self.keys = self.content[0].split(';')
 
+@dataclass
+class Csv(Converter):
     def check_int(self, value: str)->int:
             val=value
             try:
@@ -83,10 +80,51 @@ class Csv(Converter):
 
 
 class Json(Converter):
-    def get_keys(self):
-        pass
+
+    def set_keys(self)->None:
+        self.content = self.content.partition('\n')
+        layers = self.content[2].split('\n')
+        self.keys = []
+        
+        for layer in range(len(layers)):
+            key_layers = layers[layer].split(":")[0]
+            if not self.is_parenthesis(key_layers) and\
+                not (key_layers.isspace() or "\n" in key_layers or len(key_layers)==0):
+                if self.keys is not None and\
+                     key_layers not in self.keys:
+                     self.keys.append(key_layers)
+
+    def is_parenthesis(self, value:str)->bool:
+        lst_parenthesis = ["{", "}", "[", "]", ",", "},"]
+        for parenthesis in lst_parenthesis:
+            if parenthesis in value:
+                return True
+        return False
+
     def convert_to_csv(self):
-        pass
+        with open('{}.csv'.format(self.file_name), 'w') as writer:
+            for key_layers in range(len(self.keys)):
+                if key_layers != len(self.keys):
+                    writer.write(self.keys[key_layers].lstrip(" ").strip('"')+";")
+                else:
+                    writer.write(self.keys[key_layers].lstrip(" ").strip('"'))
+                    writer.write("\n")
+            layer = self.content[2].split('\n')
+            writer.write("\n")
+            for layers in range(len(layer)):
+                if len(layer[layers].split(":"))>1:
+                    sub_layer = layer[layers].split(":")[1].strip(",")
+                    if len(sub_layer.strip('" "')) != 0:
+                        if self.keys[len(self.keys)-1] not in\
+                            layer[layers].split(":")[0]:
+                            writer.write(sub_layer.strip('" "')+";")
+                        else:
+                            writer.write(sub_layer.strip('" "'))
+                if "}" in layer[layers].split(":")[0]:
+                    writer.write("\n")
+    
+
+
     def convert_to_xml(self):
         pass
     
@@ -96,16 +134,71 @@ class Xml(Converter):
 
 
 #For test purposes only
+
+
 """
 if __name__ == '__main__':
-    csv = Csv("klk", ".csv", ".xml", None, None)
-    csv.content = '''Username; Identifier;One-time password;Recovery code;First name;Last name;Department;Location
-booker12;9012;12se74;rb9012;Rachel;Booker;Sales;Manchester
-grey07;2070;04ap67;lg2070;Laura;Grey;Depot;London
-johnson81;4081;30no86;cj4081;Craig;Johnson;Depot;London
-jenkins46;9346;14ju73;mj9346;Mary;Jenkins;Engineering;Manchester
-smith79;5079;09ja61;js5079;Jamie;Smith;Engineering;Manchester'''
-csv.set_keys()
+    json = Json("klm", ".csv", ".xml", None, None)
+    json.content = '''[
+ {
+   "Username": "booker12",
+   "Identifier": 9012,
+   "One-time password": "12se74",
+   "Recovery code": "rb9012",
+   "First name": "Rachel",
+   "Last name": "Booker",
+   "Department": "Sales",
+   "Location": "Manchester"
+ },
+
+ {
+   "Username": "grey07",
+   "Identifier": 2070,
+   "One-time password": "04ap67",
+   "Recovery code": "lg2070",
+   "First name": "Laura",
+   "Last name": "Grey",
+   "Department": "Depot",
+   "Location": "London"
+ },
+
+ {
+   "Username": "johnson81",
+   "Identifier": 4081,
+   "One-time password": "30no86",
+   "Recovery code": "cj4081",
+   "First name": "Craig",
+   "Last name": "Johnson",
+   "Department": "Depot",
+   "Location": "London"
+ },
+
+ {
+   "Username": "jenkins46",
+   "Identifier": 9346,
+   "One-time password": "14ju73",
+   "Recovery code": "mj9346",
+   "First name": "Mary",
+   "Last name": "Jenkins",
+   "Department": "Engineering",
+   "Location": "Manchester"
+ },
+
+ {
+   "Username": "smith79",
+   "Identifier": 5079,
+   "One-time password": "09ja61",
+   "Recovery code": "js5079",
+   "First name": "Jamie",
+   "Last name": "Smith",
+   "Department": "Engineering",
+   "Location": "Manchester"
+ }
+]'''
+json.set_keys()
+#print(json.keys)
 #csv.convert_to_json()
-csv.convert_to_xml()
+json.convert_to_csv()
+#json.convert_to_xml()
+
 """
