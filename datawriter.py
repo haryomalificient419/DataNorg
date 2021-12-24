@@ -1,5 +1,6 @@
 from typing import Text
 from dataclasses import dataclass
+import os
 
 #first lets work on converting csv to json
 
@@ -126,7 +127,15 @@ class Json(Converter):
 
 
     def convert_to_xml(self):
-        pass
+        self.convert_to_csv()
+        with open('{}.csv'.format(self.file_name), 'r') as reader:
+            content = reader.read()
+            csv = Csv(self.file_name, self.format, ".xml", content, None)
+            csv.set_keys()
+            csv.convert_to_xml()
+        os.remove(self.file_name+".csv")
+
+        
     
 class Xml(Converter):
     pass
@@ -138,7 +147,7 @@ class Xml(Converter):
 
 """
 if __name__ == '__main__':
-    json = Json("klm", ".csv", ".xml", None, None)
+    json = Json("klmo", ".json", ".xml", None, None)
     json.content = '''[
  {
    "Username": "booker12",
@@ -198,7 +207,7 @@ if __name__ == '__main__':
 json.set_keys()
 #print(json.keys)
 #csv.convert_to_json()
-json.convert_to_csv()
-#json.convert_to_xml()
+#json.convert_to_csv()
+json.convert_to_xml()
 
 """
