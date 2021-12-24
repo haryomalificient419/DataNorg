@@ -62,14 +62,30 @@ class Csv(Converter):
                     writer.write(" },\n\n")
             writer.write("\n]")
 
-    def convert_to_xml(self):
-        pass
+    def convert_to_xml(self)->None:
+        with open('{}.xml'.format(self.file_name), 'w') as writer:
+            writer.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+            layers = self.content[2].split('\n')
+            writer.write("<root>\n")
+            for layer in range(len(layers)):
+                sub_layers = layers[layer].split(';')
+                for sub_layer in range(len(sub_layers)):
+                    if sub_layer == 0:
+                        writer.write(" <row>\n")
+                    writer.write(" "*2+"<"+self.keys[sub_layer].strip(" ")+">"+sub_layers[sub_layer]+\
+                        "</"+self.keys[sub_layer].strip(" ")+">""\n")
+                    if sub_layer == len(sub_layers) - 1:
+                        writer.write(" </row>\n")
+            writer.write("</root>\n")
+                        
+                   
+                
 
 
 class Json(Converter):
     def get_keys(self):
         pass
-    def convert_to_json(self):
+    def convert_to_csv(self):
         pass
     def convert_to_xml(self):
         pass
@@ -82,7 +98,7 @@ class Xml(Converter):
 #For test purposes only
 """
 if __name__ == '__main__':
-    csv = Csv("klk", ".csv", ".json", None, None)
+    csv = Csv("klk", ".csv", ".xml", None, None)
     csv.content = '''Username; Identifier;One-time password;Recovery code;First name;Last name;Department;Location
 booker12;9012;12se74;rb9012;Rachel;Booker;Sales;Manchester
 grey07;2070;04ap67;lg2070;Laura;Grey;Depot;London
@@ -90,5 +106,6 @@ johnson81;4081;30no86;cj4081;Craig;Johnson;Depot;London
 jenkins46;9346;14ju73;mj9346;Mary;Jenkins;Engineering;Manchester
 smith79;5079;09ja61;js5079;Jamie;Smith;Engineering;Manchester'''
 csv.set_keys()
-csv.convert_to_json()
+#csv.convert_to_json()
+csv.convert_to_xml()
 """

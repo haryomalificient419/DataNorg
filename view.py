@@ -65,6 +65,9 @@ class Start(Screen):
             if self._format_to == ".json":
                 csv.set_keys()
                 csv.convert_to_json()
+            if self._format_to == ".xml":
+                csv.set_keys()
+                csv.convert_to_xml()
         
         
     
