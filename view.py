@@ -39,10 +39,6 @@ class Start(Screen):
 
     def dismiss_popup(self) -> None:
         self._popup.dismiss()
-        
-    def open_warning_message(self) -> None:
-        self.set_popup(WarningMessage())
-        self._popup.open()
 
     def open_file(self) -> None:
         self.set_popup(OpenFile(load=self.load))
@@ -86,7 +82,7 @@ class Start(Screen):
     def load(self, path, filename):
         try:
             with open(os.path.join(path, filename[0])) as stream:
-                certified_files = ('.csv', '.xml', '.json')
+                certified_files = ('.csv', '.json')
                 try:
                     for certified_file in certified_files:
                         if self.is_valid_filename(filename, certified_file):
@@ -99,6 +95,9 @@ class Start(Screen):
                             compl_filename = filename[0][file_ind_start:]
                             new_filename = compl_filename[:compl_filename.find(".")]
                             self.set_file_name(new_filename)
+                        else:
+                            warning = WarningMessage(warning = "Can only open csv/json file")
+                            self.add_widget(warning)
                             
                 except:
                     pass
@@ -115,8 +114,8 @@ class Start(Screen):
 
 
 
-class WarningMessage(Popup):
-   pass
+class WarningMessage(FloatLayout):
+   warning = ObjectProperty(None)
 
 class OpenFile(Popup):
     load = ObjectProperty(None)
