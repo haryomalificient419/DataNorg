@@ -7,7 +7,7 @@ Convert csv to json to xml file  vice-versa.
 
 **DataNorg** is a free, open source data converter/ editing application, which helps you write and visualize your data in real time. COnvert csv, json file into csv, json and xml file.
 
-### How to use ReadMeEditor?
+### How to use DataNorg?
 
 - You can clone this repo and run
 - ~cd DataNorg
