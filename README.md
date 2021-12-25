@@ -13,6 +13,12 @@ Convert csv to json to xml file  vice-versa.
 - ~cd DataNorg
 - ~python -m main
 
+![DataNorg steps](https://github.com/haryomalificient419/DataNorg/blob/main/images/datanorg%20startscreen.PNG)
+![DataNorg steps](https://github.com/haryomalificient419/DataNorg/blob/main/images/openfile.PNG)
+![DataNorg steps](https://github.com/haryomalificient419/DataNorg/blob/main/images/clickonfile.PNG)
+![DataNorg steps](https://github.com/haryomalificient419/DataNorg/blob/main/images/convert%20file.PNG)
+![DataNorg steps](https://github.com/haryomalificient419/DataNorg/blob/main/images/openjsonfile.PNG)
+
 
 ![DataNorg icon](https://github.com/haryomalificient419/DataNorg/blob/main/images/datanorg.png)
 
